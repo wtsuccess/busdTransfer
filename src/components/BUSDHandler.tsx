@@ -9,7 +9,7 @@ const BUSDHandler = () => {
 
   const [connectStatus, setConnectStatus] = useState("");
   const [BUSDAmount, setBUSDAmount] = useState(0);
-  const [receiveraddress, setReceiveraddress] = useState("0x0000000000000");
+  const [receiveraddress, setReceiverAddress] = useState("0x0000000000000");
   const { send: transferBUSD, state: transferBUSDStatus } = useTransferBUSD();
 
   const { data: BUSDBalance } = useBalance({ address: BUSDContractAddress });
@@ -50,7 +50,7 @@ const BUSDHandler = () => {
           <input
             type="string"
             placeholder=""
-            onChange={(e) => {setReceiveraddress(e.target.value)}}
+            onChange={(e) => {setReceiverAddress(e.target.value)}}
             value={receiveraddress}
             className="bg-gray-800 py-2 px-3 text-white appearance-none text-[12px] sm:text-base"
           />

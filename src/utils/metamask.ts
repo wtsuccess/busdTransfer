@@ -27,5 +27,5 @@ export const getMetamaskErrorMessage = (error: any) => {
   if (METAMASK_ERRORS[errorCode]) {
     return METAMASK_ERRORS[errorCode];
   }
-  return "Buy Failed";
+  return "Transfer Failed";
 };
