@@ -22,10 +22,10 @@ export const useTransferBUSD = () => {
             if ((await busd.allowance(await signer.getAddress(), BUSDHandlerAddress)).lt(ethers.utils.parseUnits(BUSDAmount + "", 18))) {
                 await busd.approve(BUSDHandlerAddress, ethers.utils.parseEther(BUSDAmount + ""));
             }
-            await busdHandler.deposit(receiver, ethers.utils.parseEther(BUSDAmount + ""));
+            await busdHandler.deposit(receiver, ethers.utils.parseUnits(BUSDAmount + "", 18));
             setTransactionStatus({
                 status: 'Success'
-            })
+            });
         } catch(err) {
             console.log("error while buying: ", err);
             setTransactionStatus({

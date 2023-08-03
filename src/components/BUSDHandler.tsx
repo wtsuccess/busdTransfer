@@ -9,12 +9,12 @@ const BUSDHandler = () => {
 
   const [connectStatus, setConnectStatus] = useState("");
   const [BUSDAmount, setBUSDAmount] = useState(0);
-  const [receiveraddress, setReceiverAddress] = useState("0x0000000000000");
-  const { send: transferBUSD, state: transferBUSDStatus } = useTransferBUSD();
+  const [receiverAddress, setReceiverAddress] = useState("0x0000000000000");
+  const { send: transferBUSD, state: transactionStatus } = useTransferBUSD();
 
   const { data: BUSDBalance } = useBalance({ address: BUSDContractAddress });
 
-  const handleTransferPressed = async () => {
+  const handleTransfer = async () => {
     if (!signer) {
       setConnectStatus("Connect Wallet!");
       return;
@@ -24,7 +24,7 @@ const BUSDHandler = () => {
 
     if (Number(BUSDBalance?.formatted) < BUSDAmount) return;
     setConnectStatus("");
-    await transferBUSD(BUSDAmount, signer, receiveraddress);
+    await transferBUSD(BUSDAmount, signer, receiverAddress);
   };
 
   return (
@@ -51,7 +51,7 @@ const BUSDHandler = () => {
             type="string"
             placeholder=""
             onChange={(e) => {setReceiverAddress(e.target.value)}}
-            value={receiveraddress}
+            value={receiverAddress}
             className="bg-gray-800 py-2 px-3 text-white appearance-none text-[12px] sm:text-base"
           />
         </div>
@@ -64,8 +64,8 @@ const BUSDHandler = () => {
         <div className="flex justify-between">
           <button
             className="py-2 px-4 rounded-md bg-orange-500 hover: text-[12px] sm:text-base cursor-pointer"
-            onClick={handleTransferPressed}
-            disabled={transferBUSDStatus?.status === "Pending"}
+            onClick={handleTransfer}
+            disabled={transactionStatus?.status === "Pending"}
           >
             Transfer BUSD
           </button>
@@ -75,12 +75,12 @@ const BUSDHandler = () => {
             {connectStatus}
           </p>
         )}
-        {transferBUSDStatus?.status === "Failed" && (
+        {transactionStatus?.status === "Failed" && (
           <p className="text-[#fa1111] py-2 sm:py-3 text-[12px] sm:text-base text-right">
-            {transferBUSDStatus.errMsg}
+            {transactionStatus.errMsg}
           </p>
         )}
-        {transferBUSDStatus?.status === "Success" && (
+        {transactionStatus?.status === "Success" && (
           <p className="text-green-500 py-2 sm:py-3 text-[12px] sm:text-base text-right">
             Transaction successful
           </p>
